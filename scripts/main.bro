@@ -29,7 +29,7 @@ export {
         ## Useful if you reuse part of darknet space for honey net purposes
         DARKNET_OR_NOT_ALLOCATED,
 
-        ## Only hosts both defined in darknet_address_space AND listed in used_address_space are dark
+        ## Only hosts both defined in darknet_address_space AND NOT listed in used_address_space are dark
         ## Useful if your networking group may reallocate your darknet subnets out from under you.
         DARKNET_AND_NOT_ALLOCATED,
     };
