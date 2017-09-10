@@ -3,11 +3,19 @@ module Site;
 export {
     # These should be figured out based on how large local_nets is
     # if local_nets is a single /24, v4_aggregation_bits can be 32
+    ## When adding a host, truncate it to this many bits and assume the entire
+    ## subnet is in use
+
     const v4_aggregation_bits = 24 &redef;
     const v6_aggregation_bits = 64 &redef;
 
+    ## A set containing subnets from local_nets that are in use
     global used_address_space: set[subnet] &synchronized &redef;
+
+    ## A set containing subnets from local_nets tht are dark
     global darknet_address_space: set[subnet] &synchronized &redef;
+
+    ## Return true if an address is dark
     global is_darknet: function(a: addr): bool;
 
     type DarknetMode: enum {
