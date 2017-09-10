@@ -1,0 +1,3 @@
+[package]
+test_command = cd testing && btest -d tests
+script_dir = scripts
