@@ -1,4 +1,4 @@
-# Bro Darknet
+# Bro Is Darknet?
 This plugin adds a Site::is\_darknet function.
 This is useful for scripts that track scan attempts or other probes.
 It can handle purely dark address space as well as honeynet space.
