@@ -12,7 +12,7 @@ export {
     ## A set containing subnets from local_nets that are in use
     global used_address_space: set[subnet] &synchronized &redef;
 
-    ## A set containing subnets from local_nets tht are dark
+    ## A set containing subnets from local_nets that are dark
     global darknet_address_space: set[subnet] &synchronized &redef;
 
     ## Return true if an address is dark
