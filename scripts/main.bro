@@ -11,9 +11,18 @@ export {
     global is_darknet: function(a: addr): bool;
 
     type DarknetMode: enum {
+        ## Only hosts defined in darknet_address_space are dark
         DARKNET,
+
+        ## Only hosts NOT listed in used_address_space are dark
         NOT_ALLOCATED,
+
+        ## Only hosts defined in darknet_address_space OR NOT listed in used_address_space are dark
+        ## Useful if you reuse part of darknet space for honey net purposes
         DARKNET_OR_NOT_ALLOCATED,
+
+        ## Only hosts both defined in darknet_address_space AND listed in used_address_space are dark
+        ## Useful if your networking group may reallocate your darknet subnets out from under you.
         DARKNET_AND_NOT_ALLOCATED,
     };
     const darknet_mode: DarknetMode=DARKNET &redef;
@@ -44,11 +53,11 @@ function is_darknet(a: addr): bool
     case DARKNET:
         return (a in darknet_address_space);
     case NOT_ALLOCATED:
-        return (a in local_nets && a !in used_address_space);
+        return (a in local_nets && |used_address_space| != 0 && a !in used_address_space);
     case DARKNET_OR_NOT_ALLOCATED:
-        return (a in darknet_address_space || (a in local_nets && a !in used_address_space));
+        return (a in darknet_address_space || (|used_address_space| != 0 && a in local_nets && a !in used_address_space));
     case DARKNET_AND_NOT_ALLOCATED:
-        return (a in darknet_address_space && (a in local_nets && a !in used_address_space));
+        return (a in darknet_address_space && (|used_address_space| != 0 && a in local_nets && a !in used_address_space));
     }
     Reporter::error(fmt("Invalid darknet_mode %s(%d)", darknet_mode, darknet_mode));
     return F;
