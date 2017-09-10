@@ -30,13 +30,13 @@ You should `redef` these in `local.bro` using something like
     redef Site::used_address_space = {
         192.168.1.0/24, 192.168.2.0/24, 192.168.4.0/24,
         192.168.10.0/24, 192.168.11.0/24, 192.168.13.0/24,
-    }
+    };
 
 or
 
     redef Site::darknet_address_space = {
         192.168.0.0/24, 192.168.253.0/24, 192.168.2544.0/24,
-    }
+    };
 
 ## Auto used_address_space tracking
 
