@@ -15,7 +15,7 @@ It can handle purely dark address space as well as honeynet space.
   NOT listed in used_address_space are dark. Useful if you reuse part of darknet
   space for honey net purposes
 * `DARKNET_AND_NOT_ALLOCATED` - Only hosts both defined in
-  darknet_address_space AND NOT listed in used_address_space are dark Useful if
+  darknet_address_space AND NOT listed in used_address_space are dark. Useful if
   your networking group may reallocate your darknet subnets out from under you.
 
 ## subnet sets
