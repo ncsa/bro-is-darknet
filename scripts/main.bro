@@ -34,6 +34,10 @@ export {
         DARKNET_AND_NOT_ALLOCATED,
     };
     const darknet_mode: DarknetMode=DARKNET &redef;
+
+    redef enum Notice::Type += {
+    	     New_Used_Address_Space
+    };
 }
 
 function aggregate_address(a: addr): subnet
@@ -50,8 +54,8 @@ function add_host(a: addr)
     if (a !in used_address_space) {
         local masked = aggregate_address(a);
         add used_address_space[masked];
-        Reporter::info(fmt("New used address space %s", masked));
-        flush_all();
+        NOTICE([$note=New_Used_Address_Space,
+                $msg=fmt("%s",masked)]);
     }
 }
 
