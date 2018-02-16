@@ -38,6 +38,7 @@ export {
     redef enum Notice::Type += {
     	     New_Used_Address_Space
     };
+    global new_used_address_space: event(sn: subnet);
 }
 
 function aggregate_address(a: addr): subnet
@@ -49,12 +50,26 @@ function aggregate_address(a: addr): subnet
     }
 }
 
+######################################
+# Cluster mode
+@if ( Cluster::is_enabled() )
+redef Cluster::worker2manager_events += /Site::new_used_address_space/;
+
+event Site::new_used_address_space(sn: subnet)
+{
+    add used_address_space[sn];
+}
+@endif
+######################################
+
 function add_host(a: addr)
 {
     if (a !in used_address_space) {
         local masked = aggregate_address(a);
         add used_address_space[masked];
+        event Site::new_used_address_space(masked);
         NOTICE([$note=New_Used_Address_Space,
+                $identifier=fmt("%s",masked),
                 $msg=fmt("%s",masked)]);
     }
 }
