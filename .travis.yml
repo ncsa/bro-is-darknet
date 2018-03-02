@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker run -t -i --rm -v `pwd`:/bro-is-darknet  broplatform/bro:2.5.3-dev bro-pkg test /bro-is-darknet
+  - docker run -t -i --rm -v `pwd`:/bro-is-darknet  broplatform/bro:2.5.3-dev bro-pkg test /bro-is-darknet --version $(git rev-parse HEAD)
