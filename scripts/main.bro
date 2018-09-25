@@ -10,10 +10,10 @@ export {
     const v6_aggregation_bits = 64 &redef;
 
     ## A set containing subnets from local_nets that are in use
-    global used_address_space: set[subnet] &synchronized &redef;
+    global used_address_space: set[subnet] &redef;
 
     ## A set containing subnets from local_nets that are dark
-    global darknet_address_space: set[subnet] &synchronized &redef;
+    global darknet_address_space: set[subnet] &redef;
 
     ## Return true if an address is dark
     global is_darknet: function(a: addr): bool;
