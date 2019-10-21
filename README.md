@@ -40,12 +40,13 @@ or
 
 ## Auto used_address_space tracking
 
-This plugin will also add any host that it sees a bidirectional connection from
-to `used_address_space`.  It does this by first aggregating the address up to
-the subnet it was seen in using the `v4_aggregation_bits` (default 24) or
-`v6_aggregation_bits` (default 64) values.
+if Site::auto_manage_allocated is true this plugin will also add any host that
+it sees a bidirectional connection from to `used_address_space`.  It does this
+by first aggregating the address up to the subnet it was seen in using the
+`v4_aggregation_bits` (default 24) or `v6_aggregation_bits` (default 64)
+values.
 
-This is for the extra paranoid configuration of `darknet_mode = DARKNET_AND_NOT_ALLOCATED`.
-If you have `192.168.0.0/24` listed under `darknet_address_space`, but bro sees
-a bidirectional connection to `192.168.0.55` it will no longer treat all of
-`192.168.0.0/24` as dark.
+This is for the extra paranoid configuration of `darknet_mode =
+DARKNET_AND_NOT_ALLOCATED`.  If you have `192.168.0.0/16` listed under
+`darknet_address_space`, but bro sees a bidirectional connection to
+`192.168.0.55` it will no longer treat all of `192.168.0.0/24` as dark.

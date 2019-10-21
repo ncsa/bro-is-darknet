@@ -35,6 +35,10 @@ export {
     };
     const darknet_mode: DarknetMode=DARKNET &redef;
 
+    ## Automatically add newly seen hosts to used_address_space after
+    ## truncating to v4_aggregation_bits or v6_aggregation_bits
+    const auto_manage_allocated: bool=F &redef;
+
     redef enum Notice::Type += {
     	     New_Used_Address_Space
     };
@@ -101,6 +105,8 @@ function is_darknet(a: addr): bool
 #Similar to how known hosts works, but this will also catch udp only hosts.
 event Conn::log_conn(rec: Conn::Info)
 {
+    if (!auto_manage_allocated)
+        return;
     if (|Site::local_nets| == 0)
         return;
     if (rec$local_orig && rec$orig_pkts > 0)
