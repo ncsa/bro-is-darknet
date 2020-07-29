@@ -1,11 +1,11 @@
 module Site;
 
-@ifndef(bro_init)
-# New zeek doest not define bro_init
-global bro_init: event();
-event zeek_init()
+@ifndef(zeek_init)
+# Older bro installs do not define zeek_init
+global zeek_init: event();
+event bro_init()
 {
-    event bro_init();
+    event zeek_init();
 }
 @endif
 
@@ -69,7 +69,7 @@ function aggregate_address(a: addr): subnet
 @ifdef (Cluster::worker2manager_events)
 redef Cluster::worker2manager_events += /Site::new_used_address_space/;
 @else
-event bro_init()
+event zeek_init()
 {
     Broker::auto_publish(Cluster::manager_topic, Site::new_used_address_space);
     Broker::auto_publish(Cluster::proxy_topic, Site::new_used_address_space);
