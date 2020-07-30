@@ -1,5 +1,14 @@
 module Site;
 
+@ifndef(zeek_init)
+# Older bro installs do not define zeek_init
+global zeek_init: event();
+event bro_init()
+{
+    event zeek_init();
+}
+@endif
+
 export {
     # These should be figured out based on how large local_nets is
     # if local_nets is a single /24, v4_aggregation_bits can be 32
@@ -60,7 +69,7 @@ function aggregate_address(a: addr): subnet
 @ifdef (Cluster::worker2manager_events)
 redef Cluster::worker2manager_events += /Site::new_used_address_space/;
 @else
-event bro_init()
+event zeek_init()
 {
     Broker::auto_publish(Cluster::manager_topic, Site::new_used_address_space);
     Broker::auto_publish(Cluster::proxy_topic, Site::new_used_address_space);
