@@ -57,10 +57,7 @@ function aggregate_address(a: addr): subnet
 ######################################
 # Cluster mode
 @if ( Cluster::is_enabled() )
-@ifdef (Cluster::worker2manager_events)
-redef Cluster::worker2manager_events += /Site::new_used_address_space/;
-@else
-event bro_init()
+event zeek_init()
 {
     Broker::auto_publish(Cluster::manager_topic, Site::new_used_address_space);
     Broker::auto_publish(Cluster::proxy_topic, Site::new_used_address_space);

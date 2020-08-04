@@ -1,4 +1,4 @@
-# @TEST-EXEC: bro  ../../../scripts %INPUT > out
+# @TEST-EXEC: zeek  ../../../scripts %INPUT > out
 # @TEST-EXEC: btest-diff out
 
 module Site;
