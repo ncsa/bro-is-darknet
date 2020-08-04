@@ -71,7 +71,6 @@ event zeek_init()
     Broker::auto_publish(Cluster::manager_topic, Site::new_used_address_space);
     Broker::auto_publish(Cluster::proxy_topic, Site::new_used_address_space);
 }
-@endif
 
 event Site::new_used_address_space(sn: subnet)
 {
