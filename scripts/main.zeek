@@ -1,14 +1,5 @@
 module Site;
 
-@ifndef(zeek_init)
-# Older bro installs do not define zeek_init
-global zeek_init: event();
-event bro_init()
-{
-    event zeek_init();
-}
-@endif
-
 export {
     # These should be figured out based on how large local_nets is
     # if local_nets is a single /24, v4_aggregation_bits can be 32
