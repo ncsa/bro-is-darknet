@@ -6,14 +6,14 @@ export {
     ## When adding a host, truncate it to this many bits and assume the entire
     ## subnet is in use
 
-    const v4_aggregation_bits = 24 &redef;
-    const v6_aggregation_bits = 64 &redef;
+    option v4_aggregation_bits = 24;
+    option v6_aggregation_bits = 64;
 
     ## A set containing subnets from local_nets that are in use
-    global used_address_space: set[subnet] &redef;
+    option used_address_space: set[subnet] = {};
 
     ## A set containing subnets from local_nets that are dark
-    global darknet_address_space: set[subnet] &redef;
+    option darknet_address_space: set[subnet] = {};
 
     ## Return true if an address is dark
     global is_darknet: function(a: addr): bool;
@@ -33,7 +33,7 @@ export {
         ## Useful if your networking group may reallocate your darknet subnets out from under you.
         DARKNET_AND_NOT_ALLOCATED,
     };
-    const darknet_mode: DarknetMode=DARKNET &redef;
+    option darknet_mode: DarknetMode=DARKNET;
 
     ## Automatically add newly seen hosts to used_address_space after
     ## truncating to v4_aggregation_bits or v6_aggregation_bits
