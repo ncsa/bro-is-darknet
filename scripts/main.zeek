@@ -57,12 +57,6 @@ function aggregate_address(a: addr): subnet
 ######################################
 # Cluster mode
 @if ( Cluster::is_enabled() )
-event zeek_init()
-{
-    Broker::auto_publish(Cluster::manager_topic, Site::new_used_address_space);
-    Broker::auto_publish(Cluster::proxy_topic, Site::new_used_address_space);
-}
-
 event Site::new_used_address_space(sn: subnet)
 {
     add used_address_space[sn];
@@ -76,6 +70,11 @@ function add_host(a: addr)
         local masked = aggregate_address(a);
         add used_address_space[masked];
         event Site::new_used_address_space(masked);
+        @if ( Cluster::is_enabled() )
+        local e = Cluster::make_event(Site::new_used_address_space, masked);
+        Cluster::publish(Cluster::manager_topic, e);
+        Cluster::publish(Cluster::proxy_topic, e);
+        @endif
         NOTICE([$note=New_Used_Address_Space,
                 $identifier=fmt("%s",masked),
                 $msg=fmt("%s",masked)]);
