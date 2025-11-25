@@ -6,13 +6,16 @@ export {
     ## When adding a host, truncate it to this many bits and assume the entire
     ## subnet is in use
 
+    ## This represents the bitmask for IPv4 used address spaces.
     const v4_aggregation_bits = 24 &redef;
+
+    ## This represents the bitmask for IPv6 used address spaces.
     const v6_aggregation_bits = 64 &redef;
 
-    ## A set containing subnets from local_nets that are in use
+    ## This defines the set of used address spaces.
     global used_address_space: set[subnet] &redef;
 
-    ## A set containing subnets from local_nets that are dark
+    ## This defines the set of dark address spaces.
     global darknet_address_space: set[subnet] &redef;
 
     ## Return true if an address is dark
@@ -33,6 +36,8 @@ export {
         ## Useful if your networking group may reallocate your darknet subnets out from under you.
         DARKNET_AND_NOT_ALLOCATED,
     };
+
+    ## Controls whether a host is considered dark.
     const darknet_mode: DarknetMode=DARKNET &redef;
 
     ## Automatically add newly seen hosts to used_address_space after
@@ -40,7 +45,9 @@ export {
     const auto_manage_allocated: bool=F &redef;
 
     redef enum Notice::Type += {
-    	     New_Used_Address_Space
+        ## This notice is generated when a new address is added to the set of
+        ## used address spaces.
+        New_Used_Address_Space
     };
     global new_used_address_space: event(sn: subnet);
 }
