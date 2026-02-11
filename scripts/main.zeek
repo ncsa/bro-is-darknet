@@ -71,9 +71,11 @@ function add_host(a: addr)
         add used_address_space[masked];
         event Site::new_used_address_space(masked);
         @if ( Cluster::is_enabled() )
-        local e = Cluster::make_event(Site::new_used_address_space, masked);
-        Cluster::publish(Cluster::manager_topic, e);
-        Cluster::publish(Cluster::proxy_topic, e);
+        # Modern Zeek: Use Broker::publish instead of Cluster::make_event or Cluster::publish.
+        Broker::publish(Cluster::manager_topic,
+                Site::new_used_address_space, masked);
+        Broker::publish(Cluster::proxy_topic,
+                Site::new_used_address_space, masked);
         @endif
         NOTICE([$note=New_Used_Address_Space,
                 $identifier=fmt("%s",masked),
